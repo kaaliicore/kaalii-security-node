@@ -92,7 +92,10 @@ function handleLicenseError(message, checkService, req, res, next, error = null)
     return next();
   }
 
-  return res.status(403).json({ error: message });
+  return res.status(403).json({
+    error: message,
+    kaali_message: message
+  });
 }
 
 function optionsLogger(checkService, message, error) {

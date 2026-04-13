@@ -200,20 +200,21 @@ console.log("License verification response:", response.status, response.data);
       : [];
     const blockPageContent = licenseInfo.blockPageContent || this.config.DEFAULT_BLOCK_PAGE_CONTENT;
     if (!allowedDomains.includes(domain)) {
+      const kaaliMessage = blockPageContent
+        ? Buffer.from(blockPageContent, "base64")
+          .toString("utf8")
+          .replace(/^[\s\S]*<body[^>]*>/i, "")
+          .replace(/<\/body>[\s\S]*$/i, "")
+          .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+          .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+          .replace(/<\/(p|div|h1|h2|h3|br|li)>/gi, " ")
+          .replace(/<[^>]*>/g, "")
+          .replace(/\s+/g, " ")
+          .trim()
+        : "";
       res.status(403).json({
         status: false,
-        message: blockPageContent
-          ? Buffer.from(blockPageContent, "base64")
-            .toString("utf8")
-            .replace(/^[\s\S]*<body[^>]*>/i, "")
-            .replace(/<\/body>[\s\S]*$/i, "")
-            .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-            .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-            .replace(/<\/(p|div|h1|h2|h3|br|li)>/gi, " ")
-            .replace(/<[^>]*>/g, "")
-            .replace(/\s+/g, " ")
-            .trim()
-          : ""
+        kaali_message: kaaliMessage
       });
       return true;
     }
@@ -291,7 +292,7 @@ console.log("License verification response:", response.status, response.data);
 
     const updatedBody = {
       ...parsedBody,
-      message: appMessages[0]
+      kaali_message: appMessages[0]
     };
 
     if (typeof responseBody === "string") {
