@@ -1,0 +1,32 @@
+{
+  "name": "kaalii-security-node",
+  "version": "1.0.0",
+  "description": "Node.js middleware-based security package mirroring the Kaalii Laravel license validation flow.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kaaliicore/kaalii-security-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaaliicore/kaalii-security-node/issues"
+  },
+  "homepage": "https://github.com/kaaliicore/kaalii-security-node#readme",
+  "main": "index.js",
+  "type": "commonjs",
+  "files": [
+    "index.js",
+    "README.md",
+    "src"
+  ],
+  "keywords": [
+    "express",
+    "middleware",
+    "license",
+    "security",
+    "nextjs",
+    "nestjs"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.8.4"
+  }
+}
