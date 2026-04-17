@@ -10,7 +10,7 @@ Use the exact same variable names:
 - `API_TOKEN`
 - `VERIFICATION_KEY`
 
-## Install
+## Install (both node and nest)
 
 This package is not published to the public npm registry yet. Install it directly from GitHub:
 
@@ -29,7 +29,7 @@ npm install kaaliicore/kaalii-security-node
 
 Then use this package locally or publish it as an NPM package.
 
-## Express
+## Express (only node)
 
 Create a local wrapper file in data folder called `security.js`:
 
@@ -44,7 +44,7 @@ Then in your application entry point:
 app.use(require("./data/security"));
 ```
 
-## Key file
+## Key file (both node and nest)
 
 `data/a2FhbGlp.key`
 
@@ -55,15 +55,43 @@ API_TOKEN=your-api-token
 VERIFICATION_KEY=your-verification-key
 ```
 
-## check installation status security packages 
+## check installation status security packages  (both node and nest)
 
 ```bash
 node -e "console.log(Object.keys(require('kaalii-security-node')))"
 ```
 
-##  uninstall security packages 
+##  uninstall security packages (both node and nest)
 
 ```bash
 npm uninstall kaalii-security-node  
 npm cache clean --force    
 ``` 
+
+
+# Use for nest js (only nest)
+```js
+// src/security/Security.ts
+const { createSecurityCheckMiddleware } = require('kaalii-security-node');
+
+export function registerSecurity(app: any) {
+  app.use(createSecurityCheckMiddleware());
+}
+```
+
+
+add code in src/main.ts
+```js
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { registerSecurity } from './security/Security';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  registerSecurity(app);
+
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
+```

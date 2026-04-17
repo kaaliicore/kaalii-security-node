@@ -1,18 +1,9 @@
 "use strict";
 
-let NestMiddleware;
-
-try {
-  ({ NestMiddleware } = require("@nestjs/common"));
-} catch (_error) {
-  NestMiddleware = class {};
-}
-
 const { createSecurityCheckMiddleware } = require("../middleware/securityCheckMiddleware");
 
-class KaaliiSecurityMiddleware extends NestMiddleware {
+class KaaliiSecurityMiddleware {
   constructor(options = {}) {
-    super();
     this.middleware = createSecurityCheckMiddleware(options);
   }
 
